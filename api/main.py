@@ -1,28 +1,14 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import JSONResponse
 import uvicorn
-import numpy as np
-from io import BytesIO
 from PIL import Image
 import torch 
 import torch.nn as nn
 from torchvision.transforms import v2
 import torch.nn.functional as F
+import io
 
 app = FastAPI()
-
-mean = ([0.4977, 0.5281, 0.3800])
-std = ([0.1744, 0.1733, 0.1814])
-
-transforms = v2.Compose([
-    v2.Resize(256),
-    v2.CenterCrop(224),
-    v2.Resize((224, 224)),  
-    v2.RandomVerticalFlip(),
-    v2.RandomHorizontalFlip(),
-    v2.ToImage(),
-    v2.ToDtype(torch.float32, scale=True),
-    v2.Normalize(mean, std) 
-])
 
 class Net(nn.Module):
     def __init__(self):
@@ -46,7 +32,19 @@ class Net(nn.Module):
     
 model = Net()
 
-PATH = './Model.pth'
+mean = ([0.4977, 0.5281, 0.3800])
+std = ([0.1744, 0.1733, 0.1814])
+
+transform = v2.Compose([
+    v2.Resize((224, 224)),
+    v2.ToImage(),
+    v2.ToDtype(torch.float32, scale=True),
+    v2.Normalize(mean, std) 
+])
+
+
+PATH = 'Model_State_Dict.pth'
+model = Net()
 model.load_state_dict(torch.load(PATH))
 model.eval()
 class_names = ['Healthy', 'Mosaic', 'RedRot', 'Rust', 'Yellow']
@@ -55,19 +53,20 @@ class_names = ['Healthy', 'Mosaic', 'RedRot', 'Rust', 'Yellow']
 async def ping():
     return "Hello the server is running"
 
-def read_file_as_image(data) -> np.ndarray:
-    image = np.array(Image.open(BytesIO(data)))
-    return image
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
-    image = read_file_as_image(await file.read())
-    input_tensor = transforms(image)
-    input_tensor = input_tensor.unsqueeze(0)
+    contents = await file.read()
+    image = Image.open(io.BytesIO(contents)).convert("RGB")
+    image = transform(image).unsqueeze(0)  
+
     with torch.no_grad():
-        output = model(input_tensor)
-        predicted = torch.max(output.data, 1)
-    pass
+        outputs = model(image)
+        _, predicted = torch.max(outputs.data, 1)
+        predicted_class_idx = predicted.item()
+        predicted_class_name = class_names[predicted_class_idx]
+
+    return JSONResponse(content={"predicted_class": predicted_class_name})
 
 
 if __name__ == "__main__":
