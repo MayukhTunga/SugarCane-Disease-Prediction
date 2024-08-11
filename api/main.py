@@ -65,6 +65,8 @@ async def predict(file: UploadFile = File(...)):
         outputs = model(image)
         _, predicted = torch.max(outputs.data, 1)
         predicted_class_idx = predicted.item()
+        confidence = max(predicted)
+        print(confidence)
         predicted_class_name = class_names[predicted_class_idx]
 
     return JSONResponse(content={"predicted_class": predicted_class_name})

@@ -7,7 +7,8 @@ function SugarCaneDiseaseIdentifier() {
     const [error, setError] = useState(null); 
 
     const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        const file = event.target.files[0];
+        setSelectedFile(file);
         setResult(""); 
         setError(null); 
     };
@@ -38,76 +39,36 @@ function SugarCaneDiseaseIdentifier() {
     };
 
     return (
-        <div className="flex-col items-center justify-center h-64 text-center mx-auto mt-4 mb-56 isolate aspect-video w-96 rounded-xl bg-white/20 shadow-lg ring-1 ring-black/5">
+        <div className="flex flex-col items-center justify-center h-auto text-center mx-auto mt-4 mb-56 isolate aspect-video w-96 rounded-xl bg-white/20 shadow-lg ring-1 ring-black/5">
             <input 
                 type="file" 
                 className="m-4 p-4 border-2 rounded-lg cursor-pointer bg-white/50"
                 onChange={handleFileChange} 
-
             />
+            {selectedFile && (
+                <div className="my-4">
+                    <img 
+                        src={URL.createObjectURL(selectedFile)} 
+                        alt="Selected file" 
+                        className="rounded-lg border-2 border-gray-300 w-[224px] h-[224px] object-cover"
+                    />
+                </div>
+            )}
             <button 
                 onClick={handleAnalyzeImage} 
-                style={styles.button}
+                className="py-2 px-4 bg-green-600 text-white rounded-lg cursor-pointer text-lg"
             >
                 Analyze Image
             </button>
-            <div style={styles.resultContainer}>
-                <div className="flex justify-center">
+            <div className="mt-6">
+                <div className="flex items-center mb-4">
                     <h3 className="text-white text-3xl">Result:</h3>
-                    {result && <p className="text-lime-300 text-3xl"> {result}</p>}
-                    {error && <p className="text-white text-3xl">{error}</p>}
+                    {result && <p className="text-lime-300 text-3xl">{result}</p>}
+                    {error && <p className="text-red-500 text-3xl">{error}</p>}
                 </div>
             </div>
         </div>
     );
 }
-
-const styles = {
-    container: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        backgroundColor: "#f4f4f4",
-        textAlign: "center",
-    },
-    title: {
-        fontSize: "2.5rem",
-        color: "#333",
-        marginBottom: "20px",
-    },
-    fileInput: {
-        marginBottom: "20px",
-        padding: "10px",
-        borderRadius: "5px",
-        border: "1px solid #ccc",
-        cursor: "pointer",
-    },
-    button: {
-        padding: "10px 20px",
-        backgroundColor: "#4CAF50",
-        color: "white",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-        fontSize: "1rem",
-    },
-    resultContainer: {
-        marginTop: "20px",
-    },
-    resultTitle: {
-        fontSize: "1.5rem",
-        color: "#333",
-    },
-    result: {
-        fontSize: "1.2rem",
-        color: "#4CAF50",
-    },
-    error: {
-        fontSize: "1.2rem",
-        color: "red",
-    },
-};
 
 export default SugarCaneDiseaseIdentifier;

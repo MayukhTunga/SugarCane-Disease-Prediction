@@ -1,4 +1,4 @@
-import logo from "./assets/Logo.png"
+
 export default function App() {
     return(
         <>
