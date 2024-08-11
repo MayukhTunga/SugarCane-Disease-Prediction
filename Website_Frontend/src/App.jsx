@@ -1,7 +1,14 @@
+import Navbar from "./Navbar.jsx"
+import ImageUploader from './ImageUploader';
+
 export default function App() {
   return (
-    <h1 className="text-red-500 text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <>
+      <div className="bg-[url('assets/Background.jpg')] bg-cover bg-center h-screen w-full">
+      <Navbar/>
+      <p className="text-center text-white text-3xl mt-40 font-semibold">Upload Leaf Image</p>
+      <ImageUploader/>
+      </div>
+    </>
   )
 }

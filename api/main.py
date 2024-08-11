@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from PIL import Image
 import torch 
@@ -67,6 +68,14 @@ async def predict(file: UploadFile = File(...)):
         predicted_class_name = class_names[predicted_class_idx]
 
     return JSONResponse(content={"predicted_class": predicted_class_name})
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 if __name__ == "__main__":
