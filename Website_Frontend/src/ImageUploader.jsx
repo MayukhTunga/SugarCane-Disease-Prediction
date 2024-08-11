@@ -62,7 +62,7 @@ function SugarCaneDiseaseIdentifier() {
             </button>
             <div className="mt-6">
                 <div className="flex items-center mb-4">
-                    <h3 className="text-white text-3xl">Result:</h3>
+                    <h3 className="text-white text-3xl mr-1">Result:</h3>
                     {result && <p className="text-lime-300 text-3xl">{result}</p>}
                     {error && <p className="text-red-500 text-3xl">{error}</p>}
                 </div>
