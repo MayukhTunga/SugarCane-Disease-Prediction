@@ -73,7 +73,7 @@ The FastAPI backend exposes a simple API to upload images and get predictions.
   - **Description:** Upload an image and receive a disease prediction.
   - **Parameters:** 
     - Image (JPEG/PNG)
-  - **Response:** JSON object containing the prediction and confidence score.
+  - **Response:** JSON object containing the prediction.
 
 Example:
 ```bash
