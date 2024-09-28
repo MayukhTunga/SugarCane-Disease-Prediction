@@ -1,0 +1,7 @@
+Python
+Node.js 
+PyTorch 
+FastAPI
+Uvicorn
+python-multipart
+React.js
