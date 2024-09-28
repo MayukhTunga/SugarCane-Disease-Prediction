@@ -94,5 +94,3 @@ Contributions are welcome! Please fork the repository and create a pull request 
 - React.js for the frontend interface.
 
 ---
-
-Feel free to adapt this template to fit any additional details or sections specific to your project.
