@@ -9,7 +9,10 @@ This project is an end-to-end system for detecting sugarcane plant diseases usin
 - **React.js Frontend:** Simple interface for users to upload images and view results in real time.
 
 ## Demo
-[Add demo link or screenshots if applicable]
+<img width="1280" alt="SS1" src="https://github.com/user-attachments/assets/7c1baaf3-c9cf-4e76-990a-c649ae7495a9">
+
+<img width="1280" alt="SS2" src="https://github.com/user-attachments/assets/d4eb70bb-a714-4f5f-a828-9a27e5faa46d">
+
 
 ## Getting Started
 
@@ -32,26 +35,26 @@ This project is an end-to-end system for detecting sugarcane plant diseases usin
 2. **Backend Setup (FastAPI):**
    - Install the required Python packages:
      ```bash
-     pip install -r backend/requirements.txt
+     pip install -r api/requirements.txt
      ```
    - Start the FastAPI server:
      ```bash
-     uvicorn backend.main:app --reload
+     uvicorn api.main:app --reload
      ```
 
 3. **Frontend Setup (React.js):**
    - Install Node.js dependencies:
      ```bash
-     cd frontend
+     cd Website_Frontend
      npm install
      ```
    - Start the React development server:
      ```bash
-     npm start
+     npm run dev
      ```
 
 ## Usage
-1. Navigate to the frontend at `http://localhost:3000`.
+1. Navigate to the frontend at `http://localhost:5173/`.
 2. Upload a sugarcane leaf image.
 3. Receive real-time classification results indicating the plant's health.
 
